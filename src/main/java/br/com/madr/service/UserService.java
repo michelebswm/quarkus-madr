@@ -40,16 +40,6 @@ public class UserService {
 
         User user = userVO.toEntity();
 
-        // Valida os campos manualmente
-        List<MessageServiceError> violations = FieldValidator.validateFields(validator, user);
-        // Se houver violações, lança uma exceção com os erros
-        if (!violations.isEmpty()) {
-            throw new ApplicationServiceException(
-                    "message.parametrosnaoinformados",
-                    Response.Status.BAD_REQUEST.getStatusCode(),
-                    violations
-            );
-        }
 
         try {
             this.userRepository.persistAndFlush(user);
