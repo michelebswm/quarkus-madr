@@ -51,4 +51,13 @@ public class MessageServiceError implements Serializable {
     public void setField(String field) {
         this.field = field;
     }
+
+    @Override
+    public String toString() {
+        return "MessageServiceError{" +
+                "message='" + message + '\'' +
+                ", code=" + code +
+                ", field='" + field + '\'' +
+                '}';
+    }
 }
