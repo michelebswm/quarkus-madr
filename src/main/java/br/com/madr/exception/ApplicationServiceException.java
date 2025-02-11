@@ -122,4 +122,13 @@ public class ApplicationServiceException extends Exception{
     public void setErrorList(List<MessageServiceError> errorList) {
         this.errorList = errorList;
     }
+
+    @Override
+    public String toString() {
+        return "ApplicationServiceException{" +
+                "rootCause=" + rootCause +
+                ", statusCode=" + statusCode +
+                ", errorList=" + errorList +
+                '}';
+    }
 }
