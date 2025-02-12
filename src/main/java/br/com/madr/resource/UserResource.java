@@ -4,10 +4,7 @@ import br.com.madr.exception.ApplicationServiceException;
 import br.com.madr.service.UserService;
 import br.com.madr.vo.UserVO;
 import jakarta.transaction.Transactional;
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.UriInfo;
@@ -29,5 +26,12 @@ public class UserResource {
     public RestResponse<Void> register(UserVO userVO, @Context UriInfo uriInfo) throws ApplicationServiceException {
         this.userService.register(userVO);
         return RestResponse.created(uriInfo.getAbsolutePath());
+    }
+
+    @PUT
+    @Transactional
+    public RestResponse<Void> update(UserVO userVO) throws ApplicationServiceException{
+        this.userService.update(userVO);
+        return RestResponse.noContent();
     }
 }
