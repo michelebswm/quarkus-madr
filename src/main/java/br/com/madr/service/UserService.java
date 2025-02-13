@@ -4,12 +4,13 @@ import br.com.madr.domain.User;
 import br.com.madr.exception.ApplicationServiceException;
 import br.com.madr.repository.UserRepository;
 import br.com.madr.utils.StringUtils;
+import br.com.madr.utils.message.MessageBundle;
 import br.com.madr.utils.message.MessageService;
 import br.com.madr.utils.message.MessageServiceError;
-import br.com.madr.utils.validator.FieldValidator;
 import br.com.madr.vo.UserVO;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Validator;
 import jakarta.ws.rs.core.Response;
 import org.hibernate.exception.ConstraintViolationException;
@@ -32,6 +33,7 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    @Transactional
     public void register(UserVO userVO) throws ApplicationServiceException {
         LOG.log(Level.INFO, "UserService: register");
         if (this.userRepository.findByUsername(StringUtils.sanitizeName(userVO.getUsername())).isPresent()) {
@@ -54,7 +56,7 @@ public class UserService {
         }
     }
 
-
+    @Transactional
     public void update(UserVO userVO) throws ApplicationServiceException {
         LOG.log(Level.INFO, "UserService: update");
 
@@ -79,6 +81,37 @@ public class UserService {
         } catch (Exception e) {
             LOG.log(Level.SEVERE, "Error in the execution of UserService: update");
             throw new ApplicationServiceException("user.erro", new String[]{"update"});
+        }
+
+    }
+
+    @Transactional
+    public void deleteById(Long id) throws ApplicationServiceException {
+        LOG.log(Level.INFO, "UserService: deleteById");
+        if (id == null){
+            List<MessageServiceError> listaErros = new ArrayList<MessageServiceError>();
+            listaErros.add(new MessageServiceError(MessageBundle.getMessage("user.id.naoinformado"), "id"));
+            throw new ApplicationServiceException("message.parametrosnaoinformados",
+                    Response.Status.BAD_REQUEST.getStatusCode(), listaErros);
+        }
+
+        try{
+            User user = this.userRepository.findById(id);
+
+
+            if (user == null){
+                LOG.info("Debug na execucao do UserService: deleteById = não existe - id="+id);
+                throw new ApplicationServiceException("user.naocadastrado", Response.Status.NOT_FOUND.getStatusCode());
+            }
+            LOG.info(user.toString());
+
+            this.userRepository.deleteById(id);
+        } catch (ApplicationServiceException ase){
+            throw ase;
+        }catch (Exception e) {
+            LOG.log(Level.SEVERE,"Erro na execucao do UserService: deleteById", e);
+            throw new ApplicationServiceException("user.erro", new String[] { "deleteById" },
+                    Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
         }
 
     }
