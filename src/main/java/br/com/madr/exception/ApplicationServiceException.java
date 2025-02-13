@@ -33,6 +33,11 @@ public class ApplicationServiceException extends Exception{
         super(MessageBundle.getMessage(messageKeyLoc, parameters));
     }
 
+    public ApplicationServiceException(String messageKeyLoc, String[] parameters, Integer statusCode) {
+        super(MessageBundle.getMessage(messageKeyLoc, parameters));
+        this.statusCode = statusCode;
+    }
+
     public ApplicationServiceException(String messageKeyLoc, String[] parameters, Integer statusCode, List<MessageServiceError> errorList) {
         super(MessageBundle.getMessage(messageKeyLoc, parameters));
         this.statusCode = statusCode;
