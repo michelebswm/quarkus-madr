@@ -1,17 +1,23 @@
 package br.com.madr.resource;
 
+import org.jboss.resteasy.reactive.RestResponse;
+
 import br.com.madr.dto.response.RomancistaDTOResponse;
 import br.com.madr.exception.ApplicationServiceException;
 import br.com.madr.service.RomancistaService;
 import br.com.madr.utils.message.MessageResponse;
-import br.com.madr.utils.message.MessageService;
 import br.com.madr.vo.RomancistaVO;
-import jakarta.ws.rs.*;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.PATCH;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
-import org.jboss.resteasy.reactive.RestResponse;
 
 @Path("/romancista")
 @Produces(MediaType.APPLICATION_JSON)
@@ -32,9 +38,7 @@ public class RomancistaResource {
                 .<RomancistaDTOResponse>ok()
                 .entity(response)
                 .build();
-
     }
-
 
     @POST
     public RestResponse<RomancistaDTOResponse> register(RomancistaVO romancistaVO, @Context UriInfo uriInfo) throws ApplicationServiceException {
@@ -43,7 +47,6 @@ public class RomancistaResource {
                 .<RomancistaDTOResponse>created(uriInfo.getAbsolutePath())
                 .entity(response)
                 .build();
-
     }
 
     @PATCH

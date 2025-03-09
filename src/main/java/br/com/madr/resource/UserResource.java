@@ -1,16 +1,22 @@
 package br.com.madr.resource;
 
+import org.jboss.resteasy.reactive.RestResponse;
+
 import br.com.madr.exception.ApplicationServiceException;
 import br.com.madr.service.UserService;
-import br.com.madr.utils.message.MessageService;
 import br.com.madr.vo.UserVO;
-import jakarta.ws.rs.*;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PUT;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.UriInfo;
-import org.jboss.resteasy.reactive.RestResponse;
 
-@Path("/users")
+@Path("/conta")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class UserResource {

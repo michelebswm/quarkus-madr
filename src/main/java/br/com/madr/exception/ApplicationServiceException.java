@@ -1,10 +1,10 @@
 package br.com.madr.exception;
 
-import br.com.madr.utils.message.MessageBundle;
-import br.com.madr.utils.message.MessageServiceError;
-
 import java.io.Serial;
 import java.util.List;
+
+import br.com.madr.utils.message.MessageBundle;
+import br.com.madr.utils.message.MessageServiceError;
 
 public class ApplicationServiceException extends Exception{
     @Serial

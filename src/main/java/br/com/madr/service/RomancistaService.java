@@ -34,31 +34,30 @@ public class RomancistaService {
 
         Romancista romancista = this.romancistaRepository.findById(id);
 
-        if (romancista == null){
-            LOG.info("Debug na execucao do RomancistaService: findById = não existe - id="+id);
+        if (romancista == null) {
+            LOG.info("Debug na execucao do RomancistaService: findById = não existe - id=" + id);
             throw new ApplicationServiceException("romancista.naocadastrado", Response.Status.NOT_FOUND.getStatusCode());
         }
-        
+
         return RomancistaDTOResponse.fromEntity(romancista);
 
     }
-
 
     @Transactional
     public RomancistaDTOResponse register(RomancistaVO romancistaVO) throws ApplicationServiceException {
         LOG.log(Level.INFO, "RomancistaService : new register");
 
-        if (this.romancistaRepository.findByNome(romancistaVO.getNome()).isPresent()){
+        if (this.romancistaRepository.findByNome(romancistaVO.getNome()).isPresent()) {
             throw new ApplicationServiceException("romancista.jacadastrado", Response.Status.CONFLICT.getStatusCode());
         }
 
-        try{
+        try {
             Romancista romancista = romancistaVO.toEntity();
             this.romancistaRepository.persistAndFlush(romancista);
             return RomancistaDTOResponse.fromEntity(romancista);
-        } catch (ConstraintViolationException cve){
+        } catch (ConstraintViolationException cve) {
             throw new ApplicationServiceException("romancista." + cve.getConstraintName());
-        }catch (jakarta.validation.ConstraintViolationException cve) {
+        } catch (jakarta.validation.ConstraintViolationException cve) {
             System.out.println(cve.getMessage());
             throw new ApplicationServiceException("message.parametrosnaoinformados",
                     Response.Status.BAD_REQUEST.getStatusCode(),
@@ -75,16 +74,16 @@ public class RomancistaService {
         LOG.log(Level.INFO, "RomancistaService : updatePatch");
         Romancista romancista = this.romancistaRepository.findById(id);
 
-        if (romancista == null){
+        if (romancista == null) {
             throw new ApplicationServiceException("romancista.naocadastrado", Response.Status.NOT_FOUND.getStatusCode());
         }
 
-        try{
-            if (romancistaVO.getNome() != null){
+        try {
+            if (romancistaVO.getNome() != null) {
                 romancista.setNome(romancistaVO.getNome());
             }
             this.romancistaRepository.persistAndFlush(romancista);
-        }catch (ConstraintViolationException cve){
+        } catch (ConstraintViolationException cve) {
             if (cve.getConstraintName() == null && cve.getSQLException() != null) {
                 String sqlMessage = cve.getSQLException().getMessage();
                 if (sqlMessage.contains("uk_nome_romancista")) {
@@ -92,7 +91,7 @@ public class RomancistaService {
                 }
             }
             throw new ApplicationServiceException("romancista." + cve.getConstraintName());
-        }catch (jakarta.validation.ConstraintViolationException cve) {
+        } catch (jakarta.validation.ConstraintViolationException cve) {
             System.out.println("cve: " + cve.getMessage());
             throw new ApplicationServiceException("message.parametrosnaoinformados",
                     Response.Status.BAD_REQUEST.getStatusCode(),
@@ -109,16 +108,16 @@ public class RomancistaService {
         LOG.log(Level.INFO, "RomancistaService: deleteById");
 
         Romancista romancista = this.romancistaRepository.findById(id);
-        if (romancista == null){
-            LOG.info("Debug na execucao do RomancistaService: deleteById = não existe - id="+id);
+        if (romancista == null) {
+            LOG.info("Debug na execucao do RomancistaService: deleteById = não existe - id=" + id);
             throw new ApplicationServiceException("romancista.naocadastrado", Response.Status.NOT_FOUND.getStatusCode());
         }
 
-        try{
+        try {
             this.romancistaRepository.deleteById(id);
         } catch (Exception e) {
-            LOG.log(Level.SEVERE,"Erro na execucao do RomancistaService: deleteById", e);
-            throw new ApplicationServiceException("romancista.erro", new String[] { "deleteById" },
+            LOG.log(Level.SEVERE, "Erro na execucao do RomancistaService: deleteById", e);
+            throw new ApplicationServiceException("romancista.erro", new String[]{"deleteById"},
                     Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
         }
     }
