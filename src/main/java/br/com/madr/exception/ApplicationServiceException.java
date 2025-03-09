@@ -6,7 +6,7 @@ import java.util.List;
 import br.com.madr.utils.message.MessageBundle;
 import br.com.madr.utils.message.MessageServiceError;
 
-public class ApplicationServiceException extends Exception{
+public final class ApplicationServiceException extends Exception{
     @Serial
     private static final long serialVersionUID = 1L;
 

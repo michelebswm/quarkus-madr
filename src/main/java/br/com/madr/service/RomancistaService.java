@@ -35,7 +35,7 @@ public class RomancistaService {
         Romancista romancista = this.romancistaRepository.findById(id);
 
         if (romancista == null) {
-            LOG.info("Debug na execucao do RomancistaService: findById = não existe - id=" + id);
+            LOG.log(Level.INFO, "Debug na execucao do RomancistaService: findById = n\u00e3o existe - id={0}", id);
             throw new ApplicationServiceException("romancista.naocadastrado", Response.Status.NOT_FOUND.getStatusCode());
         }
 
@@ -109,7 +109,7 @@ public class RomancistaService {
 
         Romancista romancista = this.romancistaRepository.findById(id);
         if (romancista == null) {
-            LOG.info("Debug na execucao do RomancistaService: deleteById = não existe - id=" + id);
+            LOG.log(Level.INFO, "Debug na execucao do RomancistaService: deleteById = n\u00e3o existe - id={0}", id);
             throw new ApplicationServiceException("romancista.naocadastrado", Response.Status.NOT_FOUND.getStatusCode());
         }
 

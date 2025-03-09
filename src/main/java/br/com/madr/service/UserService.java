@@ -89,7 +89,7 @@ public class UserService {
     public void deleteById(Long id) throws ApplicationServiceException {
         LOG.log(Level.INFO, "UserService: deleteById");
         if (id == null){
-            List<MessageServiceError> listaErros = new ArrayList<MessageServiceError>();
+            List<MessageServiceError> listaErros = new ArrayList<>();
             listaErros.add(new MessageServiceError(MessageBundle.getMessage("user.id.naoinformado"), "id"));
             throw new ApplicationServiceException("message.parametrosnaoinformados",
                     Response.Status.BAD_REQUEST.getStatusCode(), listaErros);
@@ -100,7 +100,7 @@ public class UserService {
 
 
             if (user == null){
-                LOG.info("Debug na execucao do UserService: deleteById = não existe - id="+id);
+                LOG.log(Level.INFO, "Debug na execucao do UserService: deleteById = n\u00e3o existe - id={0}", id);
                 throw new ApplicationServiceException("user.naocadastrado", Response.Status.NOT_FOUND.getStatusCode());
             }
             LOG.info(user.toString());

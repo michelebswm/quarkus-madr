@@ -38,7 +38,7 @@ public class LivroService {
         Livro livro = this.livroRepository.findById(id);
 
         if (livro == null) {
-            LOG.info("Debug na execucao do LivroService: findById = não existe - id=" + id);
+            LOG.log(Level.INFO, "Debug na execucao do LivroService: findById = n\u00e3o existe - id={0}", id);
             throw new ApplicationServiceException("livro.naocadastrado", Response.Status.NOT_FOUND.getStatusCode());
         }
 

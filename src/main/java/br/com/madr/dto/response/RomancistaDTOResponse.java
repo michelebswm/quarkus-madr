@@ -1,9 +1,9 @@
 package br.com.madr.dto.response;
 
 import br.com.madr.domain.Romancista;
-import br.com.madr.vo.RomancistaVO;
 
 public class RomancistaDTOResponse {
+
     private Long id;
     private String nome;
 
@@ -12,7 +12,7 @@ public class RomancistaDTOResponse {
         this.nome = nome;
     }
 
-    public static RomancistaDTOResponse fromEntity(Romancista romancista){
+    public static RomancistaDTOResponse fromEntity(Romancista romancista) {
         return new RomancistaDTOResponse(
                 romancista.getId(),
                 romancista.getNome()
