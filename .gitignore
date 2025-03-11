@@ -46,3 +46,8 @@ nb-configuration.xml
 
 #logs
 logs/
+
+#jwt
+publicKey.pem
+privateKey.pem
+rsaPrivateKey.pem
