@@ -6,6 +6,7 @@ import br.com.madr.repository.UserRepository;
 import br.com.madr.security.GenerateToken;
 import br.com.madr.security.dto.LoginDTO;
 import br.com.madr.security.dto.LoginResponseDTO;
+import br.com.madr.utils.PasswordUtils;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
@@ -22,6 +23,11 @@ public class LoginService {
         LoginResponseDTO loginResponseDTO = new LoginResponseDTO();
 
         User user = this.userRepository.findByEmail(loginDto.getEmail());
+
+        if (!PasswordUtils.verify(loginDto.getSenha(), user.getSenha())){
+            throw new ApplicationServiceException("login.invalido");
+        }
+
         String token = generateToken.generateTokenJWT(user);
 
         loginResponseDTO.setEmail(loginDto.getEmail());

@@ -1,6 +1,7 @@
 package br.com.madr.vo;
 
 import br.com.madr.domain.User;
+import br.com.madr.utils.PasswordUtils;
 import br.com.madr.utils.StringUtils;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 
@@ -33,7 +34,7 @@ public class UserVO implements Serializable {
         userData.setId(id != null ? id : null);
         userData.setUsername(username != null ? StringUtils.sanitizeName(username) : null);
         userData.setEmail(email != null ? email : null);
-        userData.setSenha(senha != null ? senha : null);
+        userData.setSenha(senha != null ? PasswordUtils.encrypt(senha) : null);
 
         return userData;
     }
