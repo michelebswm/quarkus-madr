@@ -18,6 +18,7 @@ import br.com.madr.service.RomancistaService;
 import br.com.madr.utils.message.MessageResponse;
 import br.com.madr.utils.message.MessageService;
 import br.com.madr.vo.RomancistaVO;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -60,6 +61,7 @@ public class RomancistaResource {
 
     @GET
     @Path("/{id}")
+    @RolesAllowed("User")
     @Timeout(2000)
     @Retry(maxRetries = 4)
     @CircuitBreaker(requestVolumeThreshold = 10, failureRatio = 0.5, delay = 2500)
@@ -87,6 +89,7 @@ public class RomancistaResource {
     }
 
     @POST
+    @RolesAllowed("User")
     @Timeout(2000)
     @CircuitBreaker(requestVolumeThreshold = 10, failureRatio = 0.5, delay = 2500)
     @Operation(summary = "", description = "Inclusão de registro")
@@ -112,6 +115,7 @@ public class RomancistaResource {
 
     @PATCH
     @Path("/{id}")
+    @RolesAllowed("User")
     @Timeout(2000)
     @CircuitBreaker(requestVolumeThreshold = 10, failureRatio = 0.5, delay = 2500)
     @Operation(summary = "", description = "Alteração de registro por id")
@@ -140,6 +144,7 @@ public class RomancistaResource {
 
     @DELETE
     @Path("/{id}")
+    @RolesAllowed("User")
     @Timeout(2000)
     @CircuitBreaker(requestVolumeThreshold = 10, failureRatio = 0.5, delay = 2500)
     @Operation(summary = "", description = "Exclusão de registro por id")

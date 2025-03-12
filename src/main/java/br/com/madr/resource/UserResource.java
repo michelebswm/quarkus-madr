@@ -16,6 +16,7 @@ import br.com.madr.service.UserService;
 import br.com.madr.utils.message.MessageService;
 import br.com.madr.vo.UserVO;
 import jakarta.annotation.security.PermitAll;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.POST;
@@ -89,6 +90,7 @@ public class UserResource {
             responseCode = "400",
             description = "Parâmetro(s) inválido(s)"
     )
+    @RolesAllowed("User")
     public RestResponse<Void> update(UserVO userVO) throws ApplicationServiceException {
         this.userService.update(userVO);
         return RestResponse.noContent();
@@ -113,6 +115,7 @@ public class UserResource {
             responseCode = "400",
             description = "Parâmetro(s) inválido(s)"
     )
+    @RolesAllowed("User")
     public RestResponse<Void> delete(@PathParam("id") Long id) throws ApplicationServiceException {
         this.userService.deleteById(id);
         return RestResponse.noContent();
